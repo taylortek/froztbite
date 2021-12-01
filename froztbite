@@ -1,0 +1,37 @@
+froztbite () {
+
+if echo $* | grep -e "--op" -q; then
+echo options
+return
+fi
+
+if echo $* | grep -e "-share" -q; then
+read -p "ssh: " user
+read -s -p "password: " pass
+echo $user > ~/froztbite/data/user
+echo -ne "\n$pass\n" > ~/froztbite/data/pass
+sshpass -p $pass scp -r $2 ${user}:~
+return
+fi
+
+if echo $* | grep -e "--save" -q; then
+user=$( cat ~/froztbite/data/user )
+sshpass -p $( cat ~/froztbite/data/pass ) ssh $user rm -r ${PWD##*/}
+sshpass -p $( cat ~/froztbite/data/pass ) scp -r $PWD ${user}:~ &>/dev/null || echo "Folder is not shared"
+return
+fi
+
+clear
+echo -e '\033[0;96m'
+echo "  ___                     _     _           ";
+echo " / __)    made by:   _   | |   (_)_         ";
+echo "| |__ ____ ___ _____| |_ | | _  _| |_  ____ ";
+echo "|  __) ___) _ (___  )  _)| || \| |  _)/ _  )";
+echo "| | | |  | |_| / __/| |__| |_) ) | |_( (/ / ";
+echo "|_| |_|   \___(_____)\___)____/|_|\___)____)";
+echo "                    taylor                  ";
+echo -ne "\n    \"wear gloves with this\"\n\n";
+
+echo -ne "\033[0;97mfroztbite --op [[options]] -save/--save [folder/[cd]] -share [folder]\n\n"
+}
+
