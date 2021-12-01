@@ -1,2 +1,2 @@
-echo source ~/froztbite/froztbite >> ~/.bashrc
-rm ~/froztbit/setup.sh
+echo "source ~/froztbite/froztbite" >> ~/.bashrc
+rm ~/froztbite/setup.sh
